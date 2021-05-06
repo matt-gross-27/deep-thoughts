@@ -1,4 +1,3 @@
-const { user } = require('../config/connection');
 const { User, Thought } = require('../models')
 
 const resolvers = {
