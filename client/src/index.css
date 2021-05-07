@@ -128,6 +128,11 @@ nav a:hover {
   background-color: var(--dark);
 }
 
+.pill:hover a, .btn:hover a {
+  color: hsla(65, 99%, 99%, 1);
+  transition: 0.5s;
+}
+
 .btn-inline {
   display: inline;
 }
@@ -147,6 +152,10 @@ nav a:hover {
   background-color: var(--dark);
   padding: 0.625rem;
   border-radius: calc(0.18rem - 1px) calc(0.18rem - 1px) 0 0;
+}
+
+.card-header a {
+  color: hsla(65, 99%, 99%, 1);
 }
 
 .card-body {

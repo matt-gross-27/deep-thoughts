@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ThoughtList({ thoughts, title }) {
   if (!thoughts.length) {
@@ -12,14 +13,23 @@ function ThoughtList({ thoughts, title }) {
         thoughts.map(({ _id, username, thoughtText, createdAt, reactionCount }) => (
           <div key={_id} className="card mb-3">
             <p className="card-header">
-              {username} thought on {createdAt}
+              <Link
+                to={`/profile/${username}`}
+                style={{ fontWeight: 700 }}
+                className="text-light"
+              >
+                {username}
+              </Link>{' '}
+              thought on {createdAt}
             </p>
             <div className="card-body">
-              <p>{thoughtText}</p>
-              <p className="mb-0">
-                Reactions: {reactionCount} || Click to {' '}
-                {reactionCount ? 'see' : 'start'} the discussion!
+              <Link to={`/thought/${_id}`}>
+                <p>{thoughtText}</p>
+                <p className="mb-0">
+                  Reactions: {reactionCount} || Click to {' '}
+                  {reactionCount ? 'see' : 'start'} the discussion!
               </p>
+              </Link>
             </div>
 
           </div>
