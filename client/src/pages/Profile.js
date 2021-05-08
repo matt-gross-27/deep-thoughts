@@ -1,24 +1,46 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
+import Auth from '../utils/auth';
+import { useQuery } from '@apollo/react-hooks';
+import { QUERY_USER, QUERY_ME_ALL } from '../utils/queries';
 
 import Loading from '../components/Loading';
 import ThoughtList from '../components/ThoughtList';
 import FriendList from '../components/FriendList';
 
-import { useQuery } from '@apollo/react-hooks';
-import { QUERY_USER } from '../utils/queries';
 
 const Profile = () => {
   const { username: userParam } = useParams();
 
-  const {loading, data } = useQuery(QUERY_USER, {
+  const {loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME_ALL, {
     variables: { username: userParam }
   });
 
-  const { username, thoughts, friends, friendCount } = data?.user || {}
+  const { username, thoughts, friends, friendCount } = data?.me || data?.user || {}
+
+  if (Auth.isLoggedIn() && Auth.getProfile().data.username === userParam) {
+    return <Redirect to="/profile" />;
+  }
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (!username && !userParam) {
+    return (
+      <h4 className="mb-4">You need to be logged in to see this page. Use the navigation links above to sign up or log in</h4>
+    )
+  }
+
+  if (!username) {
+    return (
+      <h4 className="mb-4">
+        Sorry no user named {' '}
+        <span style={{color: "var(--secondary)", textShadow: "1px 1px 1px var(--primary)"}}>
+          {userParam}
+        </span>
+      </h4>
+    )
   }
 
   return (
