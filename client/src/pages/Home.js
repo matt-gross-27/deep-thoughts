@@ -2,6 +2,7 @@ import React from 'react';
 import ThoughtList from '../components/ThoughtList';
 import Loading from '../components/Loading';
 import FriendList from '../components/FriendList';
+import ThoughtForm from '../components/ThoughtForm';
 
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_THOUGHTS, QUERY_ME_SHORT } from '../utils/queries';
@@ -20,6 +21,11 @@ const Home = () => {
   return (
     <main>
       <div className='flex-row justify-space-between'>
+        {isLoggedIn && (
+          <div className="col-12 mb-3">
+            <ThoughtForm />
+          </div>
+        )}
         <div className={`col-12 mb-3 ${isLoggedIn && 'col-lg-8'}`}>
           {loading ? (
             <Loading />
@@ -30,7 +36,6 @@ const Home = () => {
         </div>
         {isLoggedIn && userData ? (
             <div className="col-12 col-lg-3 mb-3">
-              <h3>Friends</h3>
               <FriendList
                 username={userData.me.username}
                 friendCount={userData.me.friendCount}

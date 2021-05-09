@@ -87,8 +87,8 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { friends: friendId } },
-          { new: true }
+          { $addToSet: { friends: friendId } },
+          { new: true, runValidators: true }
         ).populate('friends');
 
         return updatedUser;
@@ -96,7 +96,19 @@ const resolvers = {
       
       throw new AuthenticationError('Not logged in')
     },
+    removeFriend: async (parent, { friendId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { friends: friendId } },
+          { new: true }
+        )
 
+        return updatedUser;
+      }
+      
+      throw new AuthenticationError('Not logged in')
+    }
   }
 };
 
