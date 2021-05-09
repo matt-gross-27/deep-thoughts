@@ -32,7 +32,11 @@ db.once('open', async () => {
       friendId = createdUsers.ops[randomUserIndex];
     }
 
-    await User.updateOne({ _id: userId }, { $addToSet: { friends: friendId } });
+    await User.updateOne(
+      { _id: userId },
+      { $addToSet: { friends: friendId } },
+      { runValidators: true }
+    );
   }
 
   // create thoughts
