@@ -33,8 +33,6 @@ function ReactionFrom({ thoughtId }) {
 
       setReactionBody('');
       setCharCount(0);
-      // // replace this with cache hook
-      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

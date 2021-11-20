@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 // add new secret as env var
-const secret = 'terceSgiB';
+const secret = process.env.SECRET ?? 'bigSecret';
 const expiration = '2h';
 
 module.exports = {
